@@ -1,6 +1,5 @@
 package org.velikokhatko.fuckyounickbot.service;
 
-import com.google.common.collect.ImmutableMap;
 import com.vdurmont.emoji.EmojiManager;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -28,20 +27,10 @@ public class FuckYouNickService extends TelegramLongPollingBot {
     private static final String SEX = EmojiManager.getForAlias("gift_heart").getUnicode() + " Хочу секса!";
     private static final String FOOD = EmojiManager.getForAlias("cake").getUnicode() + " Покорми меня!";
     private static final String CLEAR_KITCHEN = EmojiManager.getForAlias("gloves").getUnicode() + " Помой кухню!";
-//    private static final ImmutableMap<String,String> DATA = new ImmutableMap.Builder<String, String>()
-//            .put(ASS_DIRECTION, "qqq")
-//            .put(I_LOVE_YOU, "Я тебя люблю!" + EmojiManager.getForAlias("in_love_face").getUnicode())
-//            .put(WORK, "Иди работай!" + )
-//            .put(GOAT, "Коля, ты козёл!")
-//            .put(ATTENTION, ATTENTION)
-//            .put(SEX, SEX)
-//            .put(FOOD, FOOD)
-//            .put(CLEAR_KITCHEN, CLEAR_KITCHEN)
-//            .build();
 
     private String token;
     private String name;
-    private String chatId;
+    private String nickChatId;
 
     @PostConstruct
     public void startBot() {
@@ -65,11 +54,10 @@ public class FuckYouNickService extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
-        System.out.println(update.getMessage().getText());
+        sendMessage(String.valueOf(update.getMessage().getFrom().getId()), "Доставлено!");
         if (update.hasMessage()) {
             String text = update.getMessage().getText();
-//            String message = DATA.getOrDefault(text, "Пшёл нах отседа");
-            sendMessage(chatId, text);
+            sendMessage(nickChatId, text);
         }
     }
 
@@ -78,8 +66,10 @@ public class FuckYouNickService extends TelegramLongPollingBot {
             SendMessage sendMessage = new SendMessage();
             sendMessage.setChatId(currentChatId);
             sendMessage.setText(text);
-            ReplyKeyboardMarkup replyKeyboardMarkup = getSettingsKeyboard();
-            sendMessage.setReplyMarkup(replyKeyboardMarkup);
+            if (!currentChatId.equals(nickChatId)) {
+                ReplyKeyboardMarkup replyKeyboardMarkup = getSettingsKeyboard();
+                sendMessage.setReplyMarkup(replyKeyboardMarkup);
+            }
             execute(sendMessage);
         } catch (TelegramApiException e) {
             e.printStackTrace();
@@ -130,7 +120,7 @@ public class FuckYouNickService extends TelegramLongPollingBot {
     }
 
     @Value("${telegram.bot.nickChatId}")
-    public void setChatId(String chatId) {
-        this.chatId = chatId;
+    public void setNickChatId(String nickChatId) {
+        this.nickChatId = nickChatId;
     }
 }
