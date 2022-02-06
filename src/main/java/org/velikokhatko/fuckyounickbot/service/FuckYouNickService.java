@@ -15,6 +15,7 @@ import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class FuckYouNickService extends TelegramLongPollingBot {
@@ -56,7 +57,9 @@ public class FuckYouNickService extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
-        sendMessage(String.valueOf(update.getMessage().getFrom().getId()), "Доставлено!");
+        sendMessage(String.valueOf(update.getMessage().getFrom().getId()), new Random().nextInt(100) < 2
+                        ? "Хорошо, Любимая, я тебя понял)) Я тебе перезвоню, как только смогу! Люблю тебя очень-очень сильно!!"
+                        : "Доставлено!");
         if (update.hasMessage()) {
             String text = update.getMessage().getText();
             sendMessage(nickChatId, text);
