@@ -20,7 +20,7 @@ import java.util.Random;
 @Service
 public class FuckYouNickService extends TelegramLongPollingBot {
 
-    private static final String ASS_DIRECTION = EmojiManager.getForAlias("poop").getUnicode() + " Иди в жопу!";
+    private static final String ASS_DIRECTION = EmojiManager.getForAlias("poop").getUnicode() + " Иди в задницу!";
     private static final String I_LOVE_YOU = EmojiManager.getForAlias("in_love_face").getUnicode() + " Я тебя люблю!";
     private static final String WORK = EmojiManager.getForAlias("computer").getUnicode() + " Иди работай!";
     private static final String GOAT = EmojiManager.getForAlias("goat").getUnicode() + " Коля, ты козёл!";
