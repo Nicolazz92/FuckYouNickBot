@@ -25,8 +25,10 @@ public class FuckYouNickService extends TelegramLongPollingBot {
     private static final String GOAT = EmojiManager.getForAlias("goat").getUnicode() + "Коля, ты козёл!";
     private static final String ATTENTION = EmojiManager.getForAlias("dancer").getUnicode() + " Хочу внимания!";
     private static final String SEX = EmojiManager.getForAlias("gift_heart").getUnicode() + " Хочу секса!";
-    private static final String FOOD = EmojiManager.getForAlias("cake").getUnicode() + " Покорми меня!";
+    private static final String FOOD = EmojiManager.getForAlias("pretzel").getUnicode() + " Покорми меня!";
     private static final String CLEAR_KITCHEN = EmojiManager.getForAlias("gloves").getUnicode() + " Помой кухню!";
+    private static final String PING = EmojiManager.getForAlias("bellhop_bell").getUnicode() + " Пинг?";
+    private static final String TIRED = EmojiManager.getForAlias("tired_face").getUnicode() + " Я устала(";
 
     private String token;
     private String name;
@@ -100,12 +102,17 @@ public class FuckYouNickService extends TelegramLongPollingBot {
         keyboardFourthRow.add(FOOD);
         keyboardFourthRow.add(CLEAR_KITCHEN);
 
+        KeyboardRow keyboardFifthRow = new KeyboardRow();
+        keyboardFifthRow.add(PING);
+        keyboardFifthRow.add(TIRED);
+
         keyboard.add(keyboardFirstRow);
         keyboard.add(keyboardSecondRow);
         keyboard.add(keyboardThirdRow);
         keyboard.add(keyboardFourthRow);
-        replyKeyboardMarkup.setKeyboard(keyboard);
+        keyboard.add(keyboardFifthRow);
 
+        replyKeyboardMarkup.setKeyboard(keyboard);
         return replyKeyboardMarkup;
     }
 
